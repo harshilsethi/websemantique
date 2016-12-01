@@ -30,13 +30,13 @@
             <label for="mdp1">Mot de passe :</label>
             <input type="password" name="password" id="mdp1"
                    onkeyup="validateMdp2()"
-                   title = "Le mot de passe doit contenir de 6 à 8 caractères alphanumériques."
+                   title = "Le mot de passe doit contenir de 4 à 8 caractères alphanumériques."
                    required
                    placeholder="password"
-                   pattern="\w{6,9}">
+                   pattern="\w{4,8}">
             <!-- quels sont les deux scénarios où l'attribut title sera affiché ? -->
             <!-- encore une fois, quelle est la différence entre name et id pour un input ? -->
-            <span class="form_hint">De 6 à 8 caractères alphanumériques.</span>
+            <span class="form_hint">De 4 à 8 caractères alphanumériques.</span>
         </li>
         <!-- CONFIRMATION DE MOT DE PASSE -->
         <li>
@@ -46,15 +46,15 @@
                    placeholder="verify password">
             <!-- pourquoi est-ce qu'on a pas mis un attribut name ici ? -->
             <!-- quel scénario justifie qu'on ait ajouté l'écouter validateMdp2() à l'évènement onkeyup de l'input mdp1 ? -->
-            <span class="form_hint">Les mots de passes doivent être identiques.</span>
+            <span  id='validatempd' class="form_hint">Les mots de passes doivent être identiques.</span>
             <script>
                 validateMdp2 = function(e) {
                     var mdp1 = document.getElementById('mdp1').value;
                     var mdp2 = document.getElementById('mdp2').value;
+
                     if (mdp1 == mdp2) {
                         // ici on supprime le message d'erreur personnalisé, et du coup mdp2 devient valide.
-                        document.getElementById('mdp2').setCustomValidity(this.validity.patternMismatch ? 'Entre 6 et 9 caractères' : '');
-                        if(this.checkValidity()) mdp2.pattern = this.value;
+                        document.getElementById('mdp2').setCustomValidity("");
                     } else {
                         // ici on ajoute un message d'erreur personnalisé, et du coup mdp2 devient invalide.
                         document.getElementById('mdp2').setCustomValidity('Les mots de passes doivent être identiques.');
@@ -62,6 +62,7 @@
                 }
             </script>
         </li>
+
         <!-- NOM -->
         <li>
             <label for="nom">Nom :</label>
@@ -107,9 +108,9 @@
                         console.log(Date.parse(document.getElementById("birthdate").valueAsDate));
                         console.log(new Date(0).getYear());
                         console.log(new Date(65572346585).getYear());
-
+                        document.getElementById("age").value = Math.floor((Date.now() - Date.parse(document.getElementById("birthdate").valueAsDate)) / (365.25 * 24 * 60 * 60 * 1000));
                     } catch(e) {
-                        // supprimez ici la valeur de l'élément age
+                        document.getElementById("age").value = '';
                     }
                 }
             </script>
@@ -197,8 +198,11 @@
                             // Vous devez supprimer ces lignes, et modifier width et height pour:
                             //    - garder les proportions,
                             //    - et que le maximum de width et height soit égal à 96
-                            var width = MAX_WIDTH;
-                            var height = MAX_HEIGHT;
+                            width = MAX_WIDTH;
+                            height = MAX_HEIGHT;
+                            var max = width > height ? width : height;
+                            width = width * MAX_WIDTH / max;
+                            height = height * MAX_HEIGHT / max;
 
                             canvas.width = width;
                             canvas.height = height;
