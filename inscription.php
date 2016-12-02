@@ -83,8 +83,8 @@
         </li>
         <!-- SITE WEB -->
         <li>
-            <label for="url">Site Web :</label>
-            <input type="url" name="url" id="url"
+            <label for="website">Site Web :</label>
+            <input type="url" name="website" id="website"
                    placeholder="www.openclassroom.com"/>
         </li>
         <!-- SEXE -->
@@ -139,8 +139,8 @@
         </li>
         <!-- COULEUR -->
         <li>
-            <label for="color">Couleur :</label>
-            <input type="color" name="color" id="color"/>
+            <label for="couleur">Couleur :</label>
+            <input type="color" name="couleur" id="couleur"/>
             <span class="form_hint">Votre couleur préféré</span>
         </li>
         <!-- PHOTO DE PROFIL -->

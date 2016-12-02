@@ -27,8 +27,10 @@ try {
     $sql = $dbh->query("SELECT * FROM users WHERE email ='".$email."'");
     if ($sql->rowCount()>=1 ) {
         // rediriger l'utilisateur ici, avec tous les paramètres du formulaire plus le message d'erreur
-        // utiliser à bon escient la méthode htmlspecialchars http://www.php.net/manual/fr/function.htmlspecialchars.php          // et/ou la méthode urlencode http://php.net/manual/fr/function.urlencode.php
-        $emailExistant = urlencode("Un utilisateur avec cette adresse email existe déjà");
+        // utiliser à bon escient la méthode htmlspecialchars http://www.php.net/manual/fr/function.htmlspecialchars.php
+        // et/ou la méthode urlencode http://php.net/manual/fr/function.urlencode.php
+        $message="Un utilisateur avec cette adresse email existe déjà";
+        $emailExistant = urlencode($message);
         foreach ($_POST as $key => $value)
         {
             $emailExistant = $emailExistant."&".$key."=".$value;
@@ -41,22 +43,22 @@ try {
             . "VALUES (:email, :password, :nom, :prenom, :tel, :website, :sexe, :birthdate, :ville, :taille, :couleur, :profilepic)");
         $sql->bindValue(":email", $email);
         // de même, lier la valeur pour le mot de passe
-        $sql->bindValue(":password", password);
+        $sql->bindValue(":password", $password);
         // lier la valeur pour le nom, attention le nom peut être nul, il faut alors lier avec NULL, ou DEFAULT
-        $sql->bindValue(":nom", nom, PDO::PARAM_NULL);
+        $sql->bindValue(":nom", $nom, PDO::PARAM_NULL);
         // idem pour le prenom, tel, website, birthdate, ville, taille, profilepic
-        $sql->bindValue(":prenom", prenom);
-        $sql->bindValue(":tel", tel);
-        $sql->bindValue(":website", website);
-        $sql->bindValue(":birthdate", birthdate);
-        $sql->bindValue(":ville", ville);
-        $sql->bindValue(":taille", taille);
-        $sql->bindValue(":profilepic", profilepic);
+        $sql->bindValue(":prenom", $prenom);
+        $sql->bindValue(":tel", $tel);
+        $sql->bindValue(":website", $website);
+        $sql->bindValue(":birthdate", $birthdate);
+        $sql->bindValue(":ville", $ville);
+        $sql->bindValue(":taille", $taille);
+        $sql->bindValue(":profilepic", $profilepic);
         // n.b., notez: birthdate est au bon format ici, ce serait pas le cas pour un SGBD Oracle par exemple
         // idem pour la couleur, attention au format ici (7 caractères, 6 caractères attendus seulement)
-        $sql->bindValue(":couleur", couleur);
+        $sql->bindValue(":couleur", $couleur);
         // idem pour le sexe, attention il faut être sûr que c'est bien 'H', 'F', ou ''
-        $sql->bindValue(":sexe", sexe);
+        $sql->bindValue(":sexe", $sexe);
         // on tente d'exécuter la requête SQL, si la méthode renvoie faux alors une erreur a été rencontrée.
         if (!$sql->execute()) {
             echo "PDO::errorInfo():<br/>";
@@ -78,20 +80,13 @@ try {
                 $result = $sql->fetch(PDO::FETCH_ASSOC);
 
                 $_SESSION["email"] = $result["email"];
-                $_SESSION["password"] = $result["password"];
                 $_SESSION["nom"] = $result["nom"];
                 $_SESSION["prenom"] = $result["prenom"];
                 $_SESSION["tel"] = $result["tel"];
-                $_SESSION["website"] = $result["website"];
-                $_SESSION["sexe"] = $result["sexe"];
-                $_SESSION["birthdate"] = $result["birthdate"];
-                $_SESSION["ville"] = $result["ville"];
-                $_SESSION["taille"] = $result["taille"];
                 $_SESSION["couleur"] = $result["couleur"];
                 $_SESSION["profilepic"] = $result["profilepic"];
             }
-
-            // ici,  rediriger vers la page main.php
+            header("Location: main.php");
         }
         $dbh = null;
     }
