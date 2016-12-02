@@ -62,7 +62,6 @@
                 }
             </script>
         </li>
-
         <!-- NOM -->
         <li>
             <label for="nom">Nom :</label>

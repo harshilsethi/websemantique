@@ -24,10 +24,16 @@ try {
 
     // Vérifier si un utilisateur avec cette adresse email existe dans la table.
     // En SQL: sélectionner tous les tuples de la table USERS tels que l'email est égal à $email.
-    $sql = $dbh->query("la requète SQL ici");
-    if (est-ce que le nombre de réponses est supérieur ou égal à 1 ?) {
+    $sql = $dbh->query("SELECT * FROM users WHERE email ='".$email."'");
+    if ($sql->rowCount()>=1 ) {
         // rediriger l'utilisateur ici, avec tous les paramètres du formulaire plus le message d'erreur
         // utiliser à bon escient la méthode htmlspecialchars http://www.php.net/manual/fr/function.htmlspecialchars.php          // et/ou la méthode urlencode http://php.net/manual/fr/function.urlencode.php
+        $emailExistant = urlencode("Un utilisateur avec cette adresse email existe déjà");
+        foreach ($_POST as $key => $value)
+        {
+            $emailExistant = $emailExistant."&".$key."=".$value;
+        }
+        header("Location: inscription.php?erreur=".$emailExistant);
     }
     else {
         // Tenter d'inscrire l'utilisateur dans la base
@@ -35,13 +41,22 @@ try {
             . "VALUES (:email, :password, :nom, :prenom, :tel, :website, :sexe, :birthdate, :ville, :taille, :couleur, :profilepic)");
         $sql->bindValue(":email", $email);
         // de même, lier la valeur pour le mot de passe
+        $sql->bindValue(":password", password);
         // lier la valeur pour le nom, attention le nom peut être nul, il faut alors lier avec NULL, ou DEFAULT
+        $sql->bindValue(":nom", nom, PDO::PARAM_NULL);
         // idem pour le prenom, tel, website, birthdate, ville, taille, profilepic
+        $sql->bindValue(":prenom", prenom);
+        $sql->bindValue(":tel", tel);
+        $sql->bindValue(":website", website);
+        $sql->bindValue(":birthdate", birthdate);
+        $sql->bindValue(":ville", ville);
+        $sql->bindValue(":taille", taille);
+        $sql->bindValue(":profilepic", profilepic);
         // n.b., notez: birthdate est au bon format ici, ce serait pas le cas pour un SGBD Oracle par exemple
         // idem pour la couleur, attention au format ici (7 caractères, 6 caractères attendus seulement)
-        // idem pour le prenom, tel, website
+        $sql->bindValue(":couleur", couleur);
         // idem pour le sexe, attention il faut être sûr que c'est bien 'H', 'F', ou ''
-
+        $sql->bindValue(":sexe", sexe);
         // on tente d'exécuter la requête SQL, si la méthode renvoie faux alors une erreur a été rencontrée.
         if (!$sql->execute()) {
             echo "PDO::errorInfo():<br/>";
@@ -49,7 +64,7 @@ try {
             print_r($err);
         } else {
 
-            // ici démarrer une session
+            session_start();
 
             // ensuite on requête à nouveau la base pour l'utilisateur qui vient d'être inscrit, et
             $sql = $dbh->query("SELECT u.id, u.email, u.nom, u.prenom, u.couleur, u.profilepic FROM USERS u WHERE u.email='".$email."'");
@@ -59,6 +74,21 @@ try {
             else {
                 // on récupère la ligne qui nous intéresse avec $sql->fetch(),
                 // et on enregistre les données dans la session avec $_SESSION["..."]=...
+
+                $result = $sql->fetch(PDO::FETCH_ASSOC);
+
+                $_SESSION["email"] = $result["email"];
+                $_SESSION["password"] = $result["password"];
+                $_SESSION["nom"] = $result["nom"];
+                $_SESSION["prenom"] = $result["prenom"];
+                $_SESSION["tel"] = $result["tel"];
+                $_SESSION["website"] = $result["website"];
+                $_SESSION["sexe"] = $result["sexe"];
+                $_SESSION["birthdate"] = $result["birthdate"];
+                $_SESSION["ville"] = $result["ville"];
+                $_SESSION["taille"] = $result["taille"];
+                $_SESSION["couleur"] = $result["couleur"];
+                $_SESSION["profilepic"] = $result["profilepic"];
             }
 
             // ici,  rediriger vers la page main.php
