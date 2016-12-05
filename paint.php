@@ -1,4 +1,5 @@
 <?php
+include("header.php");
 // on démarre la session, si l'utilisateur n'est pas connecté alors on redirige vers la page main.php.
 session_start();
 if(!isset($_SESSION['prenom'])) {

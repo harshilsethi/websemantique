@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("header.php");
 if(!isset($_SESSION['id'])) {
     header("Location: main.php");
 } else {

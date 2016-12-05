@@ -1,5 +1,4 @@
 <?php
-
 // récupérer les éléments du formulaire
 // et se protéger contre l'injection MySQL (plus de détails ici: http://us.php.net/mysql_real_escape_string)
 $email=stripslashes($_POST['email']);
@@ -16,7 +15,7 @@ $birthdate=stripslashes($_POST['birthdate']);
 $ville=stripslashes($_POST['ville']);
 $taille=stripslashes($_POST['taille']);
 $couleur=stripslashes($_POST['couleur']);
-$profilepic=stripslashes($_POST['profilepic']);
+$profilepic=stripslashes($_POST['profilepicfile']);
 
 try {
     // Connect to server and select database.

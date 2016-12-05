@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset=utf-8 />
     <title>Pictionnary - Inscription</title>
@@ -88,9 +88,9 @@
                    placeholder="www.openclassroom.com"/>
         </li>
         <!-- SEXE -->
-        <li>
+        <br>
             <label>Sexe :</label>
-            <input type="radio" name="sexe" id="homme"/>Homme
+            <input type="radio" name="sexe" id="homme"/>Homme</br>
             <input type="radio" name="sexe" id="femme"/>Femme
         </li>
         <!-- DATE DE NAISSANCE -->
@@ -163,7 +163,7 @@
                     var canvas = document.getElementById("preview");
                     var ctx = canvas.getContext("2d");
                     // on réinitialise le canvas: on l'efface, et déclare sa largeur et hauteur à 0
-                    ctx.setFillColor("white");
+                    ctx.fillStyle = "white";
                     ctx.fillRect(0,0,canvas.width,canvas.height);
                     canvas.width=0;
                     canvas.height=0;
@@ -211,7 +211,7 @@
                             // on exporte le contenu du canvas (l'image redimensionnée) sous la forme d'une data url
                             var dataurl = canvas.toDataURL("image/png");
                             // on donne finalement cette dataurl comme valeur au champs profilepic
-                            document.getElementById("profilepic").value = dataurl;
+                            document.getElementById("profilepicfile").value = dataurl;
                         };
                     }
                     // on charge l'image pour de vrai, lorsque ce sera terminé le callback loadProfilePic sera appelé.
