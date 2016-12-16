@@ -4,5 +4,5 @@ if (isset($_GET["erreur"])) {
 }
 
 include("header.php");
-echo "<a href='paint.php'>Dessiner</a>";
+echo "</br><a href='paint.php'>Dessiner</a>";
 ?>

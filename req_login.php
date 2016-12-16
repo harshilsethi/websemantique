@@ -20,7 +20,7 @@ try {
         $_SESSION["nom"] = $result["nom"];
         $_SESSION["prenom"] = $result["prenom"];
         $_SESSION["profilepic"] = $result["profilepic"];
-        header("Location: main.php?rowCount=".$sql->rowCount());
+        header("Location: main.php?email=".$email);
     }
     else {
         header("Location: main.php?erreur=".urlencode("un problème est survenu"));

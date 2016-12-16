@@ -197,11 +197,8 @@
                             // Vous devez supprimer ces lignes, et modifier width et height pour:
                             //    - garder les proportions,
                             //    - et que le maximum de width et height soit égal à 96
-                            width = MAX_WIDTH;
-                            height = MAX_HEIGHT;
-                            var max = width > height ? width : height;
-                            width = width * MAX_WIDTH / max;
-                            height = height * MAX_HEIGHT / max;
+                            var width = MAX_WIDTH;
+                            var height = MAX_HEIGHT;
 
                             canvas.width = width;
                             canvas.height = height;
@@ -211,7 +208,7 @@
                             // on exporte le contenu du canvas (l'image redimensionnée) sous la forme d'une data url
                             var dataurl = canvas.toDataURL("image/png");
                             // on donne finalement cette dataurl comme valeur au champs profilepic
-                            document.getElementById("profilepicfile").value = dataurl;
+                            document.getElementById("profilepic").value = dataurl;
                         };
                     }
                     // on charge l'image pour de vrai, lorsque ce sera terminé le callback loadProfilePic sera appelé.

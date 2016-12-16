@@ -3,10 +3,10 @@ session_start();
 if(isset($_SESSION['email']))
 {
     $prenom = $_SESSION['prenom'];
-    $profilpic = $_SESSION['profilepic'];
-    echo "Bonjour, ".$prenom;
-    echo $profilpic;
-    echo '<div><span>Bienvenue !<a href="logout.php">Logout</a></span></div>';
+    $profilepic = $_SESSION['profilepic'];
+    echo "Bonjour, ".$prenom." !   Votre photo de profil : ";
+    echo '<img src="'.$profilepic.'" />';
+    echo '<a href="logout.php" >Deconnexion</a>';
 }
 else
 {

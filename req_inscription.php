@@ -15,7 +15,7 @@ $birthdate=stripslashes($_POST['birthdate']);
 $ville=stripslashes($_POST['ville']);
 $taille=stripslashes($_POST['taille']);
 $couleur=stripslashes($_POST['couleur']);
-$profilepic=stripslashes($_POST['profilepicfile']);
+$profilepic=stripslashes($_POST['profilepic']);
 
 try {
     // Connect to server and select database.
@@ -55,7 +55,7 @@ try {
         $sql->bindValue(":profilepic", $profilepic);
         // n.b., notez: birthdate est au bon format ici, ce serait pas le cas pour un SGBD Oracle par exemple
         // idem pour la couleur, attention au format ici (7 caractères, 6 caractères attendus seulement)
-        $sql->bindValue(":couleur", $couleur);
+        $sql->bindValue(":couleur", substr($couleur, -6));
         // idem pour le sexe, attention il faut être sûr que c'est bien 'H', 'F', ou ''
         $sql->bindValue(":sexe", $sexe);
         // on tente d'exécuter la requête SQL, si la méthode renvoie faux alors une erreur a été rencontrée.
